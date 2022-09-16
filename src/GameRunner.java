@@ -1,95 +1,95 @@
-import java.util.Objects;
 import java.util.Scanner;
+
 import static java.lang.System.out;
 
 public class GameRunner {
 
     public static void main(String[] args) {
-        Scanner scanner=new Scanner(System.in);
+
+        Scanner scanner = new Scanner(System.in);
         out.println("The game has started. Enter your character's name, health, damage, coins and number of levels " +
                 "in the given order. If they are outside of the given bounds," +
                 "they will be adjusted accordingly");
         String name;
         Knight player;
-        int health=0, damage=0, coins=0,levels=0;
-        while(true) {
+        int health, damage, coins, levels;
+        while (true) {
             try {
                 name = scanner.nextLine();
                 health = scanner.nextInt();
                 damage = scanner.nextInt();
                 coins = scanner.nextInt();
-                levels=scanner.nextInt();
-                player= new Knight(health,damage,coins,levels,name);
+                levels = scanner.nextInt();
+                scanner.nextLine();
+                player = new Knight(health, damage, coins, levels, name);
                 break;
             } catch (Exception e) {
                 out.println("You have entered wrong data. Try again please.");
                 scanner.nextLine();
             }
         }
-    out.println("While started");
-        Enemy current_enemy;
-        int current_level=0;
-        while(current_level<levels)
-        {
-            current_level++;
-            if(current_level%3==0) current_enemy=new Witch();
+        out.println("While started");
+        Enemy currentEnemy;
+        int currentLevel = 0;
+        while (currentLevel < levels) {
+            currentLevel++;
+            if (currentLevel % 3 == 0) currentEnemy = new Witch();
+            else if (currentLevel % 3 == 1) currentEnemy = new Giant();
             else
-            if(current_level%3==1) current_enemy=new Giant();
-            else
-                current_enemy=new Dragon();
+                currentEnemy = new Dragon();
 
-            while(player.getHealth()>0) {
+            label:
+            while (player.getHealth() > 0) {
                 out.println(player);
-                out.println(current_enemy);
-                if (player.getCoins() > current_enemy.getGreed()) {
-                    out.println("Choose Action (batlle,bribe,sneak)");
+                out.println(currentEnemy);
+                if (player.getCoins() > currentEnemy.getGreed()) {
+                    out.println("Choose Action (battle,bribe,sneak)");
                 } else {
-                    out.println("Choose Action (batlle,sneak)");
+                    out.println("Choose Action (battle,sneak)");
                 }
 
-                String action=new String();
-                while(action.isEmpty())
-                {
-                    action=scanner.nextLine();
-                }
+                String action;
+
+                action = scanner.nextLine();
                 out.println(action);
-                if (Objects.equals(action,"battle")) {
-                    player.deal_damage(current_enemy);
-                    current_enemy.deal_damage(player);
-                    if(current_enemy.getHealth()<=0)
-                        break;
+                switch (action) {
+                    case "battle":
+                        player.takeDamage(currentEnemy.getDamage());
+                        currentEnemy.takeDamage(player.getDamage());
+                        if (currentEnemy.getHealth() <= 0)
+                            break label;
 
-                } else if (Objects.equals(action,"bribe")) {
-                    player.pay_coins(current_enemy.getGreed());
-                    break;
-                } else if (Objects.equals(action,"sneak")) {
-                    if (current_enemy.wasDistracted()) {
-                        out.println("You snuck away successfully");
                         break;
-                    } else {
-                        out.println("The monster caught you");
-                        player.take_damge(100);
-                    }
+                    case "bribe":
+                        player.payCoins(currentEnemy.getGreed());
+                        break label;
+                    case "sneak":
+                        if (currentEnemy.wasDistracted()) {
+                            out.println("You snuck away successfully");
+                            break label;
+                        } else {
+                            out.println("The monster caught you");
+                            player.takeDamage(100);
+                        }
 
-                }
-                else {
-                    out.println("You typed clumsily and the monster killed you");
-                    player.setHealth(-1);
-                    break;
+                        break;
+                    default:
+                        out.println("You typed clumsily and the monster killed you");
+                        player.setHealth(-1);
+                        break label;
                 }
 
             }
-                if(player.getHealth()<=0) {
-                    out.println("You died");
-                    break;
-                }
-                else continue;
-
+            if (player.getHealth() <= 0) {
+                out.println("You died");
+                break;
+            } else if (player.getCoins() < 0) {
+                out.println("You tried offering an insulting sum. The monster killed you.");
+            }
 
 
         }
-        if(player.getHealth()>0)
-        {
+        if (player.getHealth() > 0) {
             out.println("You have successfully retrieved the sword.");
         }
     }

@@ -1,35 +1,34 @@
-import java.util.Random;
-
-public class Knight extends Entity{
-    private int levels,coins;
-    private String name;
+public class Knight extends Character {
+    private int coins;
+    private final String name;
 
     public int getCoins() {
         return coins;
     }
 
-    public void setCoins(int coins) {
+
+    public Knight(int health, int damage, int coins, int levels, String name) {
+
+        health = Math.min(health, levels * 100);
+        health = Math.max(health, 300);
+        damage = Math.max(damage, 100);
+        damage = Math.min(damage, 150);
+        coins = Math.min(coins, 200 * levels);
+        coins = Math.max(coins, 0);
+        this.setHealth(health);
+        this.setHealth(health);
+        this.setDamage(damage);
+        this.setDamage(damage);
         this.coins = coins;
+        this.name = name;
     }
 
-    Knight(int health, int damage, int coins, int levels, String name)
-    {
-        levels=Math.max(levels,3);
-        health=Math.min(health,levels*100);
-        health=Math.max(health,300);
-        damage=Math.min(damage,150);
-        damage=Math.max(damage,100);
-        this.health=health;
-        this.damage=damage;
-        this.coins=coins;
-        this.name=name;
+    public void payCoins(int sum) {
+        coins -= sum;
     }
-    public void pay_coins(int sum)
-    {
-        coins-=sum;
-    }
-    public String toString()
-    {
-        return name+"(HP:"+health+",ATK:"+damage+",COINS:"+coins+")";
+
+    @Override
+    public String toString() {
+        return name + "(HP:" + this.getHealth() + ",ATK:" + this.getDamage() + ",COINS:" + coins + ")";
     }
 }

@@ -1,18 +1,17 @@
-import java.util.Random;
+public class Dragon extends Enemy {
 
-public class Dragon extends Enemy{
-    private Random random=new Random();
-public Dragon()
-{
 
-    minHealth=200;
-    maxHealth=250;
-    minGreed=800;
-    maxGreed=1000;
-    this.health=random.nextInt(maxHealth-minHealth)+minHealth;
-    this.damage=random.nextInt(maxDamage-minDamage)+minDamage;
-    this.greed=random.nextInt(maxGreed-minGreed)+minGreed;
-    this.distraction=random.nextInt(maxhDistraction-minDistraction)+minDistraction;
-    this.name="Dragon";
-}
+    @Override
+    public int randomHealth() {
+        return random.nextInt(50) + 200;
+    }
+
+    public int randomGreed() {
+        return random.nextInt(1000 - 800) + 800;
+    }
+
+    public Dragon() {
+        super();
+
+    }
 }

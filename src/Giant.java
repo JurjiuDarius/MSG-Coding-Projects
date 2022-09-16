@@ -1,18 +1,17 @@
-import java.util.Random;
+public class Giant extends Enemy {
 
-public class Giant extends Enemy{
-    private Random random=new Random();
-    public Giant()
-    {
+    @Override
+    public int randomHealth() {
+        return random.nextInt(150) + 50;
+    }
 
-        minDamage=50;
-        maxDamage=200;
-        minGreed=100;
-        maxGreed=500;
-        this.health=random.nextInt(maxHealth-minHealth)+minHealth;
-        this.damage=random.nextInt(maxDamage-minDamage)+minDamage;
-        this.greed=random.nextInt(maxGreed-minGreed)+minGreed;
-        this.distraction=random.nextInt(maxhDistraction-minDistraction)+minDistraction;
-        this.name="Giant";
+    @Override
+    public int randomDistraction() {
+        return random.nextInt(50) + 100;
+    }
+
+    public Giant() {
+        super();
+
     }
 }
