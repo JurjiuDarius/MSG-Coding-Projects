@@ -2,29 +2,37 @@ import java.util.Random;
 
 public class Enemy extends Character {
 
+
+    public Enemy() {
+        this.setHealth(randomHealth());
+        this.setDamage(randomDamage());
+        this.setGreed(randomGreed());
+        this.setDistraction(randomDistraction());
+    }
+
     private int greed;
     private int distraction;
-    private final int minHealth = 50, maxHealth = 250;
-    private final int minDamage = 20, maxDamage = 150;
-    private final int minGreed = 100, maxGreed = 1000;
-    private final int minDistraction = 0, maxhDistraction = 100;
+    private static final int MIN_HEALTH = 50, MAX_HEALTH = 250;
+    private static final int MIN_DAMAGE = 20, MAX_DAMAGE = 150;
+    private static final int MIN_GREED = 100, MAX_GREED = 1000;
+    private static final int MIN_DISTRACTION = 0, MAX_DISTRACTION = 100;
 
     protected Random random = new Random();
 
     public int randomHealth() {
-        return random.nextInt(maxHealth - minHealth) + minHealth;
+        return random.nextInt(MAX_HEALTH - MIN_HEALTH) + MIN_HEALTH;
     }
 
     public int randomDamage() {
-        return random.nextInt(maxDamage - minDamage) + minDamage;
+        return random.nextInt(MAX_DAMAGE - MIN_DAMAGE) + MIN_DAMAGE;
     }
 
     public int randomDistraction() {
-        return random.nextInt(maxhDistraction - minDistraction) + minDistraction;
+        return random.nextInt(MAX_DISTRACTION - MIN_DISTRACTION) + MIN_DISTRACTION;
     }
 
     public int randomGreed() {
-        return random.nextInt(maxGreed - minGreed) + minGreed;
+        return random.nextInt(MAX_GREED - MIN_GREED) + MIN_GREED;
     }
 
 
@@ -34,15 +42,6 @@ public class Enemy extends Character {
 
     public void setDistraction(int distraction) {
         this.distraction = distraction;
-    }
-
-    public Enemy() {
-
-        this.setHealth(randomHealth());
-        this.setDamage(randomDamage());
-        this.setGreed(randomGreed());
-        this.setDistraction(randomDistraction());
-
     }
 
 

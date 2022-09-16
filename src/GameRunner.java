@@ -33,10 +33,13 @@ public class GameRunner {
         int currentLevel = 0;
         while (currentLevel < levels) {
             currentLevel++;
-            if (currentLevel % 3 == 0) currentEnemy = new Witch();
-            else if (currentLevel % 3 == 1) currentEnemy = new Giant();
-            else
+            if (currentLevel % 3 == 0) {
+                currentEnemy = new Witch();
+            } else if (currentLevel % 3 == 1) {
+                currentEnemy = new Giant();
+            } else {
                 currentEnemy = new Dragon();
+            }
 
             label:
             while (player.getHealth() > 0) {
@@ -56,8 +59,9 @@ public class GameRunner {
                     case "battle":
                         player.takeDamage(currentEnemy.getDamage());
                         currentEnemy.takeDamage(player.getDamage());
-                        if (currentEnemy.getHealth() <= 0)
+                        if (currentEnemy.getHealth() <= 0) {
                             break label;
+                        }
 
                         break;
                     case "bribe":
