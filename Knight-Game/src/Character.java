@@ -7,12 +7,12 @@ public abstract class Character {
         return damage;
     }
 
-    public int getHealth() {
-        return health;
-    }
-
     public void setDamage(int d) {
         this.damage = d;
+    }
+
+    public int getHealth() {
+        return health;
     }
 
     public void setHealth(int health) {

@@ -4,7 +4,6 @@ public class Witch extends Enemy {
 
     public Witch() {
         super();
-
     }
 
     @Override

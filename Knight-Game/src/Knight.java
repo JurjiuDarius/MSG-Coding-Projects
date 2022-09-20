@@ -1,6 +1,6 @@
 public class Knight extends Character {
-    private int coins;
     private final String name;
+    private int coins;
 
     public Knight(int health, int damage, int coins, int levels, String name) {
         this.setHealth(health);

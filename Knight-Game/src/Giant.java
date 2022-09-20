@@ -5,7 +5,6 @@ public class Giant extends Enemy {
 
     public Giant() {
         super();
-
     }
 
     @Override

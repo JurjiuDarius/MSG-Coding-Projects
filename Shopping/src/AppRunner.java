@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class AppRunner {
     public static void main(String[] args) {
-        List<Product> availaleProducts = new ArrayList<>();
-        List<Person> availablePersons = new ArrayList<>();
+        List<Product> availaleProducts;
+        List<Person> availablePersons;
         String input;
         Scanner scanner = new Scanner(System.in);
 
@@ -15,7 +15,7 @@ public class AppRunner {
                 availablePersons = parsePersons(input);
                 break;
             } catch (Exception e) {
-
+                System.out.println(e.getMessage());
             }
         }
         while (true) {
@@ -25,7 +25,7 @@ public class AppRunner {
                 availaleProducts = parseProducts(input);
                 break;
             } catch (Exception e) {
-
+                System.out.println(e.getMessage());
             }
         }
 
@@ -45,7 +45,7 @@ public class AppRunner {
                 person = getPersonByName(availablePersons, personName);
                 product = getProductByName(availaleProducts, productName);
             } catch (RuntimeException e) {
-                System.out.println("Person or product does not exist. Ending program...");
+                System.out.println(e.getMessage());
                 break;
             }
             if (person.getMoney() >= product.getCost()) {
@@ -55,27 +55,25 @@ public class AppRunner {
                 System.out.println(personName + " can' afford " + productName);
             }
         }
-        for (int i = 0; i < availablePersons.size(); i++) {
-            System.out.println(availablePersons.get(i));
+        for (Person availablePerson : availablePersons) {
+            System.out.println(availablePerson);
         }
 
     }
 
     public static List<Person> parsePersons(String s) {
         List<String> separatePersons = List.of(s.split(";"));
-        List<List<String>> personsAttributes = new ArrayList<>();
+        List<String> personsAttributes;
         List<Person> personList = new ArrayList<>();
-        for (int i = 0; i < separatePersons.size(); i++) {
-            personsAttributes.add(List.of(separatePersons.get(i).split("=")));
-            String name = personsAttributes.get(i).get(0);
-            int money = Integer.valueOf(personsAttributes.get(i).get(1));
+        for (String separatePerson : separatePersons) {
+            personsAttributes = List.of(separatePerson.split("="));
+            String name = personsAttributes.get(0);
+            int money = Integer.parseInt(personsAttributes.get(1));
             if (name.equals("")) {
-                System.out.println("Name cannot be an empty string");
-                throw new RuntimeException();
+                throw new RuntimeException("Name cannot be an empty string");
             }
             if (money < 0) {
-                System.out.println("Sum of money cannot be negative");
-                throw new RuntimeException();
+                throw new RuntimeException("Sum of money cannot be negative");
             }
             Person person = new Person(name, money);
             personList.add(person);
@@ -85,19 +83,17 @@ public class AppRunner {
 
     public static List<Product> parseProducts(String s) {
         List<String> separateProduts = List.of(s.split(";"));
-        List<List<String>> productsAttributes = new ArrayList<>();
+        List<String> productsAttributes;
         List<Product> productList = new ArrayList<>();
-        for (int i = 0; i < separateProduts.size(); i++) {
-            productsAttributes.add(List.of(separateProduts.get(i).split("=")));
-            String name = productsAttributes.get(i).get(0);
-            int money = Integer.valueOf(productsAttributes.get(i).get(1));
+        for (String separateProdut : separateProduts) {
+            productsAttributes = List.of(separateProdut.split("="));
+            String name = productsAttributes.get(0);
+            int money = Integer.parseInt(productsAttributes.get(1));
             if (name.equals("")) {
-                System.out.println("Name cannot be an empty string");
-                throw new RuntimeException();
+                throw new RuntimeException("Name cannot be an empty string");
             }
             if (money < 0) {
-                System.out.println("Sum of money cannot be negative");
-                throw new RuntimeException();
+                throw new RuntimeException("Sum of money cannot be negative");
             }
             Product product = new Product(name, money);
             productList.add(product);
@@ -111,13 +107,13 @@ public class AppRunner {
 
     private static Person getPersonByName(List<Person> list, String s) {
         Person person = new Person("", 0);
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getName().equals(s))
-                person = list.get(i);
+        for (Person value : list) {
+            if (value.getName().equals(s))
+                person = value;
 
         }
         if (person.getName().equals("")) {
-            throw new RuntimeException();
+            throw new RuntimeException("Person could not be found");
         }
         return person;
 
@@ -125,13 +121,13 @@ public class AppRunner {
 
     private static Product getProductByName(List<Product> list, String s) {
         Product product = new Product("", 0);
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getName().equals(s))
-                product = list.get(i);
+        for (Product value : list) {
+            if (value.getName().equals(s))
+                product = value;
 
         }
         if (product.getName().equals("")) {
-            throw new RuntimeException();
+            throw new RuntimeException("Product could not be found");
         }
         return product;
     }

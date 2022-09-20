@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Person {
     private final List<Product> products;
-    private String name;
+    private final String name;
     private int money;
 
 
