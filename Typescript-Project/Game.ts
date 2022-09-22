@@ -7,12 +7,15 @@ enum Actions {
   ATTACK = "Attack",
   END_TURN = "End turn",
 }
+
 let roll20Dice = function (): Number {
   return Math.floor(Math.random() * 19 + 1);
 };
+
 let randomStat = function (): Number {
   return Math.floor(Math.random() * 4 + 1);
 };
+
 let playTurn = function (
   character: CharacterSheet,
   opponent: CharacterSheet
@@ -31,8 +34,9 @@ let playTurn = function (
       case "Attack": {
         if (!availableActions.includes(Actions.ATTACK)) {
           console.log(
-            "You were too tired to attack, tripped and fell over. Take 3 damage"
+            "You were too tired to attack, tripped and fell over. Take 3 damage."
           );
+          character.takeDamage(3);
         } else {
           availableActions.splice(availableActions.indexOf(Actions.ATTACK), 1);
           console.log(
@@ -54,12 +58,12 @@ let playTurn = function (
   }
 };
 
-let Barbarian: CharacterClass = new CharacterClass(
+let barbarian: CharacterClass = new CharacterClass(
   "Barbarian",
   randomStat(),
   DiceClass.D6
 );
-let Fighter: CharacterClass = new CharacterClass(
+let fighter: CharacterClass = new CharacterClass(
   "Fighter",
   randomStat(),
   DiceClass.D10
@@ -73,7 +77,7 @@ let Dekebalus = new CharacterSheet(
   randomStat(),
   randomStat(),
   randomStat(),
-  Barbarian
+  barbarian
 );
 let Constantine = new CharacterSheet(
   "Constantine",
@@ -83,7 +87,7 @@ let Constantine = new CharacterSheet(
   randomStat(),
   randomStat(),
   randomStat(),
-  Fighter
+  fighter
 );
 var axe = new Item("Axe", ItemType.Weapon, Dekebalus);
 var sword = new Item("Sword", ItemType.Weapon, Constantine);
@@ -91,8 +95,7 @@ Dekebalus.addItem(axe);
 Constantine.addItem(sword);
 let answer = prompt("Start combat? Type yes or no.");
 if (answer == "yes") {
-  console.log("Hatz john");
-  let currentCharacter, currentOpponent: CharacterSheet;
+  let currentCharacter: CharacterSheet, currentOpponent: CharacterSheet;
 
   while (Dekebalus.getHealth() > 0 && Constantine.getHealth() > 0) {
     console.log("Rolling inititive...");

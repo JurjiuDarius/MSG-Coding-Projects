@@ -26,9 +26,6 @@ export class Item {
       this.owner.getProficiency()
     );
   };
-  getDamage = function (): Number {
-    return this.owner.characterClass.rollDice() + this.owner.getStr();
-  };
   toString() {
     return this.name;
   }

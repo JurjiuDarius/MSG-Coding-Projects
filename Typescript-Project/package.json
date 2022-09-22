@@ -5,5 +5,8 @@
   },
   "devDependencies": {
     "@types/node": "^18.7.18"
+  },
+  "scripts": {
+    "start":"tsc.cmd Game.ts --outDir dst && node dst/Game.js"
   }
 }
